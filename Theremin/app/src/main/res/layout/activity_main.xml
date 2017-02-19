@@ -3,39 +3,50 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_gravity="center_horizontal">
+    android:orientation="vertical">
 
     <TextView
+        android:id="@+id/x_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         tools:text="X Coordinate" />
 
     <TextView
+        android:id="@+id/y_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         tools:text="Y Coordinate" />
 
     <TextView
+        android:id="@+id/z_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         tools:text="Z Coordinate" />
 
     <TextView
+        android:id="@+id/rate_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         tools:text="SoundPool Rate" />
 
     <Button
         android:id="@+id/play_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="onButtonClicked"
+        android:enabled="false"
         android:text="@string/play" />
 
     <Button
         android:id="@+id/stop_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="onButtonClicked"
+        android:enabled="false"
         android:text="@string/stop" />
 
 </LinearLayout>
