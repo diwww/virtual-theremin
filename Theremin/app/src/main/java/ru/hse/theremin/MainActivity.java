@@ -18,8 +18,8 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements SoundPool.OnLoadCompleteListener, SensorEventListener {
 
-    SensorManager mSensorManager;
-    Sensor mSensor;
+    SensorManager sensorManager;
+    Sensor sensor;
     private SoundPool soundPool;
     private int soundId;
     private int streamId;
@@ -39,9 +39,9 @@ public class MainActivity extends AppCompatActivity implements SoundPool.OnLoadC
         zTextView = (TextView) findViewById(R.id.z_textview);
         rateTextView = (TextView) findViewById(R.id.rate_textview);
 
-        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        mSensorManager.registerListener(this, mSensor, SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_GAME);
 
         soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
         soundPool.setOnLoadCompleteListener(this);
