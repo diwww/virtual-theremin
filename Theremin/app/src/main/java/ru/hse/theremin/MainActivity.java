@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements SoundPool.OnLoadC
     private int streamId;
     private Button playButton, stopButton;
     private TextView xTextView, yTextView, zTextView, rateTextView;
+    private CheckBox discrCheckBox;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +41,15 @@ public class MainActivity extends AppCompatActivity implements SoundPool.OnLoadC
         zTextView = (TextView) findViewById(R.id.z_textview);
         rateTextView = (TextView) findViewById(R.id.rate_textview);
 
+        discrCheckBox = (CheckBox) findViewById(R.id.discr_checkbox);
+
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_GAME);
 
         soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
         soundPool.setOnLoadCompleteListener(this);
+        // TODO: load sound in AsyncTask
         soundPool.load(this, R.raw.square, 1);
     }
 
@@ -80,7 +85,14 @@ public class MainActivity extends AppCompatActivity implements SoundPool.OnLoadC
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        float x = (event.values[0] + 10) * 0.075f + 0.5f;
+        float x;
+        if (discrCheckBox.isChecked()) {
+            int i = Math.round((event.values[0] + 10) * 0.55f) + 1;
+            x = (float) Math.pow(2, i / 12.0);
+        } else {
+            x = (event.values[0] + 10) / 20.0f + 1;
+//            x = (event.values[0] + 10) * 0.075f + 0.5f;
+        }
         soundPool.setRate(streamId, x);
 
         xTextView.setText(String.format(Locale.US, "X: %.2f", event.values[0]));
