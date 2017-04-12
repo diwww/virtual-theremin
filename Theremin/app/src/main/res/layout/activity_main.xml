@@ -37,7 +37,7 @@
         android:id="@+id/play_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:enabled="false"
+        android:enabled="true"
         android:onClick="onButtonClicked"
         android:text="@string/play" />
 
@@ -48,12 +48,5 @@
         android:enabled="false"
         android:onClick="onButtonClicked"
         android:text="@string/stop" />
-
-    <CheckBox
-        android:id="@+id/discr_checkbox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="@string/discrete"/>
 
 </LinearLayout>
