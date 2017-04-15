@@ -3,7 +3,7 @@ package ru.hse.theremin.synthesizer;
 public class SineOscillator extends BaseOscillator {
     double t = 0.0;
 
-    public SineOscillator(int amp, double freq, int buffSize) {
+    public SineOscillator(short amp, double freq, int buffSize) {
         super(amp, freq, buffSize);
     }
 

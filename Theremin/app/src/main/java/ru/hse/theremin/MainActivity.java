@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private SensorManager sensorManager;
     private Sensor sensor;
     private Button playButton, stopButton;
-    private TextView xTextView, yTextView, zTextView, rateTextView;
+    private TextView idxTextView, rateTextView;
     private BaseOscillator oscillator;
     private boolean playing = false;
     private float freq;
@@ -44,9 +45,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         // Linking views
         playButton = (Button) findViewById(R.id.play_button);
         stopButton = (Button) findViewById(R.id.stop_button);
-        xTextView = (TextView) findViewById(R.id.x_textview);
-        yTextView = (TextView) findViewById(R.id.y_textview);
-        zTextView = (TextView) findViewById(R.id.z_textview);
+        idxTextView = (TextView) findViewById(R.id.idx_textview);
         rateTextView = (TextView) findViewById(R.id.rate_textview);
         // Sensors initialization
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -78,11 +77,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public void onSensorChanged(SensorEvent event) {
 
-        freq = 440 + 22 * event.values[0];
+        long index = Math.round(event.values[0] * 1.2);
+        freq = (float) Math.pow(2, index / 12.0) * 130.82f * 2;
 
-        xTextView.setText(String.format(Locale.US, "X: %.2f", event.values[0]));
-        yTextView.setText(String.format(Locale.US, "Y: %.2f", event.values[1]));
-        zTextView.setText(String.format(Locale.US, "Z: %.2f", event.values[2]));
+        idxTextView.setText(String.format(Locale.US, "Index: %d", Math.round(event.values[0] * 1.2)));
         rateTextView.setText(String.format(Locale.US, "Freq: %.2f", freq));
     }
 

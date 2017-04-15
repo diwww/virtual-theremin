@@ -2,17 +2,17 @@ package ru.hse.theremin.synthesizer;
 
 public abstract class BaseOscillator implements Oscillator {
 
-    private int amp;
+    private short amp;
     private double freq;
     private int buffSize;
 
-    public BaseOscillator(int amp, double freq, int buffSize) {
+    public BaseOscillator(short amp, double freq, int buffSize) {
         this.amp = amp;
         this.freq = freq;
         this.buffSize = buffSize;
     }
 
-    public int getAmp() {
+    public short getAmp() {
         return amp;
     }
 
@@ -24,7 +24,7 @@ public abstract class BaseOscillator implements Oscillator {
         return buffSize;
     }
 
-    public void setAmp(int amp) {
+    public void setAmp(short amp) {
         this.amp = amp;
     }
 
