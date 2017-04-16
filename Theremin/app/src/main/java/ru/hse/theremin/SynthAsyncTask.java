@@ -10,33 +10,71 @@ import ru.hse.theremin.synthesizer.SineWave;
 
 public class SynthAsyncTask extends AsyncTask<MainActivity, Void, Void> {
 
-    @Override
-    protected Void doInBackground(MainActivity... params) {
+    private Oscillator oscillator;
+    private AudioTrack audioTrack;
 
-        // Default oscillator
-        Oscillator oscillator = new Oscillator(new SineWave(), (short) (Short.MAX_VALUE / 4), 440);
-        AudioTrack audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC, Oscillator.SAMPLE_RATE,
-                AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_16BIT, Oscillator.BUFF_SIZE,
-                AudioTrack.MODE_STREAM);
-        audioTrack.play();
-
-        while (params[0].isPlaying()) {
+    private void majorChord(MainActivity activity) {
+        while (activity.isPlaying()) {
             short[] data;
-            oscillator.setWave(params[0].getWave());
+            oscillator.setWave(activity.getWave());
 
-            oscillator.setFreq(params[0].getFreq());
+            oscillator.setFreq(activity.getFreq());
             data = oscillator.generate();
             audioTrack.write(data, 0, data.length);
 
-            oscillator.setFreq(params[0].getFreq() * Math.pow(2, 4.0 / 12));
+            oscillator.setFreq(activity.getFreq() * Math.pow(2, 4.0 / 12));
             data = oscillator.generate();
             audioTrack.write(data, 0, data.length);
 
-            oscillator.setFreq(params[0].getFreq() * Math.pow(2, 7.0 / 12));
+            oscillator.setFreq(activity.getFreq() * Math.pow(2, 7.0 / 12));
             data = oscillator.generate();
             audioTrack.write(data, 0, data.length);
         }
+    }
 
+    private void minorChord(MainActivity activity) {
+        while (activity.isPlaying()) {
+            short[] data;
+            oscillator.setWave(activity.getWave());
+
+            oscillator.setFreq(activity.getFreq());
+            data = oscillator.generate();
+            audioTrack.write(data, 0, data.length);
+
+            oscillator.setFreq(activity.getFreq() * Math.pow(2, 3.0 / 12));
+            data = oscillator.generate();
+            audioTrack.write(data, 0, data.length);
+
+            oscillator.setFreq(activity.getFreq() * Math.pow(2, 7.0 / 12));
+            data = oscillator.generate();
+            audioTrack.write(data, 0, data.length);
+        }
+    }
+
+    private void twoNotes(MainActivity activity) {
+        while (activity.isPlaying()) {
+            short[] data;
+            oscillator.setWave(activity.getWave());
+
+            oscillator.setFreq(activity.getFreq());
+            data = oscillator.generate();
+            audioTrack.write(data, 0, data.length);
+
+            oscillator.setFreq(activity.getFreq() * 0.5);
+            data = oscillator.generate();
+            audioTrack.write(data, 0, data.length);
+        }
+    }
+
+    @Override
+    protected Void doInBackground(MainActivity... params) {
+        // Default oscillator
+        oscillator = new Oscillator(new SineWave(), (short) (Short.MAX_VALUE / 4), 440);
+        audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC, Oscillator.SAMPLE_RATE,
+                AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_16BIT, Oscillator.BUFF_SIZE,
+                AudioTrack.MODE_STREAM);
+        audioTrack.play();
+        twoNotes(params[0]);
         audioTrack.stop();
         audioTrack.release();
 

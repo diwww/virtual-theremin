@@ -110,9 +110,6 @@ public class MainActivity extends AppCompatActivity
             case R.id.sine_radio_button:
                 wave = new SineWave();
                 break;
-            case R.id.square_radio_button:
-                wave = new SquareWave();
-                break;
             case R.id.triangle_radio_button:
                 wave = new TriangleWave();
                 break;
