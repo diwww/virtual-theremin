@@ -5,11 +5,14 @@ public class Oscillator {
     // Constants
     public static final int CHANNELS = 1;
     public static final int SAMPLE_RATE = 44100;
+    public static final int NUM_SAMPLES = (int) (Oscillator.SAMPLE_RATE * Oscillator.CHANNELS * 0.1);
+    // TODO: В принципе, работает без умножения на 3 для трех звуков
+    // TODO: Подумать, стоит ли умножать размер буфера на 3
+    public static final int BUFF_SIZE = (Short.SIZE / Byte.SIZE) * NUM_SAMPLES;
 
     private Wave wave;
     private short amp;
     private double freq;
-    private int buffSize;
     // t must be initialized here, but not in
     // generate() method. It helps to avoid clicks, since
     // t continues to increase starting from its last value
@@ -18,15 +21,14 @@ public class Oscillator {
     private double t = 0.0;
 
 
-    public Oscillator(Wave wave, short amp, double freq, int buffSize) {
+    public Oscillator(Wave wave, short amp, double freq) {
         this.wave = wave;
         this.amp = amp;
         this.freq = freq;
-        this.buffSize = buffSize;
     }
 
     public short[] generate() {
-        short[] data = new short[buffSize];
+        short[] data = new short[NUM_SAMPLES];
         for (int i = 0; i <= data.length - CHANNELS; i += CHANNELS) {
             for (int channel = 0; channel < CHANNELS; channel++) {
                 data[i + channel] = (short) (amp * wave.getValue(t));
@@ -48,10 +50,6 @@ public class Oscillator {
         return freq;
     }
 
-    public int getBuffSize() {
-        return buffSize;
-    }
-
     public void setWave(Wave wave) {
         this.wave = wave;
     }
@@ -62,9 +60,5 @@ public class Oscillator {
 
     public void setFreq(double freq) {
         this.freq = freq;
-    }
-
-    public void setBuffSize(int buffSize) {
-        this.buffSize = buffSize;
     }
 }

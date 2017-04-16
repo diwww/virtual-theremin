@@ -24,7 +24,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:enabled="true"
-        android:onClick="onButtonClicked"
         android:text="@string/play"/>
 
     <Button
@@ -32,7 +31,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:enabled="false"
-        android:onClick="onButtonClicked"
         android:text="@string/stop"/>
+
+    <RadioGroup
+        android:id="@+id/wave_radio_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/sine_radio_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sine"/>
+
+        <RadioButton
+            android:id="@+id/square_radio_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/square"/>
+
+        <RadioButton
+            android:id="@+id/triangle_radio_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/triangle"/>
+
+    </RadioGroup>
 
 </LinearLayout>

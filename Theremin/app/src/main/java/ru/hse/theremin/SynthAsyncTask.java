@@ -7,31 +7,22 @@ import android.os.AsyncTask;
 
 import ru.hse.theremin.synthesizer.Oscillator;
 import ru.hse.theremin.synthesizer.SineWave;
-import ru.hse.theremin.synthesizer.SquareWave;
-import ru.hse.theremin.synthesizer.TriangleWave;
-import ru.hse.theremin.synthesizer.Wave;
 
 public class SynthAsyncTask extends AsyncTask<MainActivity, Void, Void> {
-
-    AudioTrack audioTrack;
-    Oscillator oscillator;
 
     @Override
     protected Void doInBackground(MainActivity... params) {
 
-        final int numSamples = (int) (Oscillator.SAMPLE_RATE * Oscillator.CHANNELS * 0.1);
-        final int buffSize = (Short.SIZE / Byte.SIZE) * numSamples;
-
-        Wave wave = new TriangleWave();
-        oscillator = new Oscillator(wave, (short) (Short.MAX_VALUE / 4), 440, numSamples);
-        audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC, Oscillator.SAMPLE_RATE,
-                AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_16BIT, buffSize,
+        // Default oscillator
+        Oscillator oscillator = new Oscillator(new SineWave(), (short) (Short.MAX_VALUE / 4), 440);
+        AudioTrack audioTrack = new AudioTrack(AudioManager.STREAM_MUSIC, Oscillator.SAMPLE_RATE,
+                AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_16BIT, Oscillator.BUFF_SIZE,
                 AudioTrack.MODE_STREAM);
-
         audioTrack.play();
 
         while (params[0].isPlaying()) {
             short[] data;
+            oscillator.setWave(params[0].getWave());
 
             oscillator.setFreq(params[0].getFreq());
             data = oscillator.generate();
