@@ -1,59 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <TextView
-        android:id="@+id/x_textview"
+        android:id="@+id/idx_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        tools:text="X Coordinate" />
-
-    <TextView
-        android:id="@+id/y_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        tools:text="Y Coordinate" />
-
-    <TextView
-        android:id="@+id/z_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        tools:text="Z Coordinate" />
+        tools:text="X Coordinate"/>
 
     <TextView
         android:id="@+id/rate_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        tools:text="SoundPool Rate" />
+        tools:text="SoundPool Rate"/>
 
     <Button
         android:id="@+id/play_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:enabled="false"
-        android:onClick="onButtonClicked"
-        android:text="@string/play" />
+        android:enabled="true"
+        android:text="@string/play"/>
 
     <Button
         android:id="@+id/stop_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:enabled="false"
-        android:onClick="onButtonClicked"
-        android:text="@string/stop" />
+        android:text="@string/stop"/>
 
-    <CheckBox
-        android:id="@+id/discr_checkbox"
+    <RadioGroup
+        android:id="@+id/wave_radio_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/discrete"/>
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/sine_radio_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/sine"/>
+
+        <RadioButton
+            android:id="@+id/triangle_radio_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/triangle"/>
+
+    </RadioGroup>
 
 </LinearLayout>
