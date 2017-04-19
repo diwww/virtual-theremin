@@ -73,9 +73,10 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onSensorChanged(SensorEvent event) {
         long index = Math.round(event.values[0] * 1.2);
+//        long index = Math.round((event.values[0] + 10) * 12.0 / 20.0);
         freq = Math.pow(2, index / 12.0) * 261.63;
 
-        idxTextView.setText(String.format(Locale.US, "Index: %d", Math.round(event.values[0] * 1.2)));
+        idxTextView.setText(String.format(Locale.US, "Index: %d", index));
         rateTextView.setText(String.format(Locale.US, "Freq: %.2f", freq));
     }
 

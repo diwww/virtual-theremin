@@ -2,7 +2,7 @@ package ru.hse.theremin.synthesizer;
 
 /**
  * Annoying and disgusting sound.
- * Remove abstract modifier on your
+ * Remove abstract modifier at your
  * own risk. It may damage phone speakers
  * and your ears.
  */
