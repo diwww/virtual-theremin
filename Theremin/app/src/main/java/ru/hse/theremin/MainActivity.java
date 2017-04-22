@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.system.Os;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +34,8 @@ public class MainActivity extends AppCompatActivity
     private Button playButton, stopButton;
     private TextView idxTextView, rateTextView;
     private RadioGroup waveRadioGroup;
+    private RadioGroup octaveRadioGroup;
+    private CheckBox lockCheckBox;
     private Wave wave;
     private double freq;
     private boolean playing;
@@ -63,6 +66,8 @@ public class MainActivity extends AppCompatActivity
         waveRadioGroup = (RadioGroup) findViewById(R.id.wave_radio_group);
         waveRadioGroup.setOnCheckedChangeListener(this);
         waveRadioGroup.check(R.id.sine_radio_button);
+        octaveRadioGroup = (RadioGroup) findViewById(R.id.octave_radio_group);
+        octaveRadioGroup.check(R.id.one_radio_button);
         // Sensors initialization
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -72,8 +77,17 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        long index = Math.round(event.values[0] * 1.2);
-//        long index = Math.round((event.values[0] + 10) * 12.0 / 20.0);
+        long index = 0;
+
+        if (octaveRadioGroup.getCheckedRadioButtonId() == R.id.one_radio_button) {
+            // For one octave (more space to rotate)
+            index = Math.round((event.values[0] + 10) * 12.0 / 20.0);
+        } else if (octaveRadioGroup.getCheckedRadioButtonId() == R.id.two_radio_button) {
+            // For two octaves (more notes are available)
+            index = Math.round(event.values[0] * 1.2);
+        }
+
+
         freq = Math.pow(2, index / 12.0) * 261.63;
 
         idxTextView.setText(String.format(Locale.US, "Index: %d", index));
@@ -107,16 +121,18 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
-        switch (checkedId) {
-            case R.id.sine_radio_button:
-                wave = new SineWave();
-                break;
-            case R.id.triangle_radio_button:
-                wave = new TriangleWave();
-                break;
-            default:
-                wave = new SineWave();
-                break;
+        if (group.getId() == R.id.wave_radio_group) {
+            switch (checkedId) {
+                case R.id.sine_radio_button:
+                    wave = new SineWave();
+                    break;
+                case R.id.triangle_radio_button:
+                    wave = new TriangleWave();
+                    break;
+                default:
+                    wave = new SineWave();
+                    break;
+            }
         }
     }
 }

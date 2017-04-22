@@ -66,6 +66,17 @@ public class SynthAsyncTask extends AsyncTask<MainActivity, Void, Void> {
         }
     }
 
+    private void oneNote(MainActivity activity) {
+        while (activity.isPlaying()) {
+            short[] data;
+            oscillator.setWave(activity.getWave());
+
+            oscillator.setFreq(activity.getFreq());
+            data = oscillator.generate();
+            audioTrack.write(data, 0, data.length);
+        }
+    }
+
     @Override
     protected Void doInBackground(MainActivity... params) {
         // Default oscillator
@@ -74,7 +85,7 @@ public class SynthAsyncTask extends AsyncTask<MainActivity, Void, Void> {
                 AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_16BIT, Oscillator.BUFF_SIZE,
                 AudioTrack.MODE_STREAM);
         audioTrack.play();
-        twoNotes(params[0]);
+        oneNote(params[0]);
         audioTrack.stop();
         audioTrack.release();
 

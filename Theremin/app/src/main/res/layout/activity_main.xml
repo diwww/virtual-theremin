@@ -33,6 +33,14 @@
         android:enabled="false"
         android:text="@string/stop"/>
 
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:text="@string/wave_type"/>
+
     <RadioGroup
         android:id="@+id/wave_radio_group"
         android:layout_width="wrap_content"
@@ -51,7 +59,41 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/triangle"/>
-
     </RadioGroup>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:text="@string/octave_mode"/>
+
+    <RadioGroup
+        android:id="@+id/octave_radio_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/one_radio_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/one"/>
+
+        <RadioButton
+            android:id="@+id/two_radio_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/two"/>
+    </RadioGroup>
+
+    <CheckBox
+        android:id="@+id/lock_checkbox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:text="@string/lock"/>
 
 </LinearLayout>
