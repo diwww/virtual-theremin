@@ -12,6 +12,7 @@ import android.system.Os;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +28,7 @@ import ru.hse.theremin.synthesizer.Wave;
 public class MainActivity extends AppCompatActivity
         implements SensorEventListener,
         RadioGroup.OnCheckedChangeListener,
+        CompoundButton.OnCheckedChangeListener,
         View.OnClickListener {
 
     private SensorManager sensorManager;
@@ -36,9 +38,16 @@ public class MainActivity extends AppCompatActivity
     private RadioGroup waveRadioGroup;
     private RadioGroup octaveRadioGroup;
     private CheckBox lockCheckBox;
+    private TextView lockNoteIdTextView;
     private Wave wave;
     private double freq;
-    private boolean playing;
+    private boolean playing = false;
+    private boolean lockNotesFlag = false;
+    // Dark - synth
+    private int[] lockNotes = {0, 5, 3, 1};
+    // Чижик - пыжик
+    //    private int[] lockNotes = {10, 6, 10, 6, 11, 10, 8, 1, 1, 3, 5, 6, 6, 6};
+    private int lockNoteId = 0;
 
     public Wave getWave() {
         return wave;
@@ -68,6 +77,9 @@ public class MainActivity extends AppCompatActivity
         waveRadioGroup.check(R.id.sine_radio_button);
         octaveRadioGroup = (RadioGroup) findViewById(R.id.octave_radio_group);
         octaveRadioGroup.check(R.id.one_radio_button);
+        lockCheckBox = (CheckBox) findViewById(R.id.lock_checkbox);
+        lockCheckBox.setOnCheckedChangeListener(this);
+        lockNoteIdTextView = (TextView) findViewById(R.id.lock_note_id_textview);
         // Sensors initialization
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -87,8 +99,16 @@ public class MainActivity extends AppCompatActivity
             index = Math.round(event.values[0] * 1.2);
         }
 
+        if (lockNotesFlag) {
+            if (lockNotes[lockNoteId] == index) {
+                freq = Math.pow(2, index / 12.0) * 261.63;
+                lockNoteId = (lockNoteId + 1) % lockNotes.length;
+                lockNoteIdTextView.setText(String.format(Locale.US, "Next note: %d", lockNotes[lockNoteId]));
+            }
+        } else {
+            freq = Math.pow(2, index / 12.0) * 261.63;
+        }
 
-        freq = Math.pow(2, index / 12.0) * 261.63;
 
         idxTextView.setText(String.format(Locale.US, "Index: %d", index));
         rateTextView.setText(String.format(Locale.US, "Freq: %.2f", freq));
@@ -133,6 +153,17 @@ public class MainActivity extends AppCompatActivity
                     wave = new SineWave();
                     break;
             }
+        }
+    }
+
+    @Override
+    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        lockNotesFlag = isChecked;
+        if (lockNotesFlag) {
+            lockNoteId = 0;
+            lockNoteIdTextView.setText(String.format(Locale.US, "Next note: %d", lockNotes[lockNoteId]));
+        } else {
+            lockNoteIdTextView.setText("");
         }
     }
 }

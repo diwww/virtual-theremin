@@ -5,7 +5,7 @@ public class Oscillator {
     // Constants
     public static final int CHANNELS = 1;
     public static final int SAMPLE_RATE = 44100;
-    public static final int NUM_SAMPLES = (int) (Oscillator.SAMPLE_RATE * Oscillator.CHANNELS * 0.1);
+    public static final int NUM_SAMPLES = (int) (Oscillator.SAMPLE_RATE * Oscillator.CHANNELS * 0.2);
     // TODO: В принципе, работает без умножения на 3 для трех звуков
     // TODO: Подумать, стоит ли умножать размер буфера на 3
     public static final int BUFF_SIZE = (Short.SIZE / Byte.SIZE) * NUM_SAMPLES;

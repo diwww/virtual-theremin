@@ -85,7 +85,7 @@ public class SynthAsyncTask extends AsyncTask<MainActivity, Void, Void> {
                 AudioFormat.CHANNEL_OUT_MONO, AudioFormat.ENCODING_PCM_16BIT, Oscillator.BUFF_SIZE,
                 AudioTrack.MODE_STREAM);
         audioTrack.play();
-        oneNote(params[0]);
+        twoNotes(params[0]);
         audioTrack.stop();
         audioTrack.release();
 
