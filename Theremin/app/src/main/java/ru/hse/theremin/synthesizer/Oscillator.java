@@ -5,10 +5,13 @@ public class Oscillator {
     // Constants
     public static final int CHANNELS = 1;
     public static final int SAMPLE_RATE = 44100;
-    public static final int NUM_SAMPLES = (int) (Oscillator.SAMPLE_RATE * Oscillator.CHANNELS * 0.2);
+    // TODO: нужно уменьшать длительность для одной ноты
+    public static final double DURATION = 0.2;
+    public static final int NUM_SAMPLES = (int) (Oscillator.SAMPLE_RATE * Oscillator.CHANNELS * DURATION);
     // TODO: В принципе, работает без умножения на 3 для трех звуков
     // TODO: Подумать, стоит ли умножать размер буфера на 3
     public static final int BUFF_SIZE = (Short.SIZE / Byte.SIZE) * NUM_SAMPLES;
+    public static final double C_FIRST_OCTAVE = 261.63;
 
     private Wave wave;
     private short amp;
@@ -17,14 +20,13 @@ public class Oscillator {
     // generate() method. It helps to avoid clicks, since
     // t continues to increase starting from its last value
     // and periodic function smoothly flows further.
-    // TODO: think of double overflow
     private double t = 0.0;
 
 
-    public Oscillator(Wave wave, short amp, double freq) {
-        this.wave = wave;
-        this.amp = amp;
-        this.freq = freq;
+    public Oscillator() {
+        this.wave = new SineWave();
+        this.amp = (short) (Short.MAX_VALUE / 4);
+        this.freq = C_FIRST_OCTAVE;
     }
 
     public short[] generate() {
@@ -58,7 +60,7 @@ public class Oscillator {
         this.amp = amp;
     }
 
-    public void setFreq(double freq) {
-        this.freq = freq;
+    public void setFreq(int index) {
+        this.freq = Math.pow(2, index / 12.0) * C_FIRST_OCTAVE;
     }
 }

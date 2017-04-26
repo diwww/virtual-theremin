@@ -12,13 +12,6 @@
         android:layout_gravity="center"
         tools:text="X Coordinate"/>
 
-    <TextView
-        android:id="@+id/rate_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        tools:text="SoundPool Rate"/>
-
     <Button
         android:id="@+id/play_button"
         android:layout_width="match_parent"
