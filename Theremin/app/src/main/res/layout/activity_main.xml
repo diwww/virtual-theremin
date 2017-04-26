@@ -66,7 +66,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
-        android:text="@string/octave_mode"/>
+        android:text="@string/octaves"/>
 
     <RadioGroup
         android:id="@+id/octave_radio_group"
@@ -76,16 +76,56 @@
         android:orientation="horizontal">
 
         <RadioButton
-            android:id="@+id/one_radio_button"
+            android:id="@+id/one_octave_radio_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/one"/>
 
         <RadioButton
-            android:id="@+id/two_radio_button"
+            android:id="@+id/two_octaves_radio_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/two"/>
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:text="@string/play_mode"/>
+
+    <RadioGroup
+        android:id="@+id/play_mode_radio_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/one_note_radio_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/one"/>
+
+        <RadioButton
+            android:id="@+id/two_notes_radio_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/two"/>
+
+        <RadioButton
+            android:id="@+id/major_chord_radio_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/major"/>
+
+        <RadioButton
+            android:id="@+id/minor_chord_radio_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/minor"/>
+
     </RadioGroup>
 
     <CheckBox

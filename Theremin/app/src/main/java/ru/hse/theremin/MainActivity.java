@@ -8,7 +8,6 @@ import android.hardware.SensorManager;
 import android.support.annotation.IdRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.system.Os;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -19,9 +18,7 @@ import android.widget.Toast;
 
 import java.util.Locale;
 
-import ru.hse.theremin.synthesizer.Oscillator;
 import ru.hse.theremin.synthesizer.SineWave;
-import ru.hse.theremin.synthesizer.SquareWave;
 import ru.hse.theremin.synthesizer.TriangleWave;
 import ru.hse.theremin.synthesizer.Wave;
 
@@ -37,6 +34,7 @@ public class MainActivity extends AppCompatActivity
     private TextView idxTextView, rateTextView;
     private RadioGroup waveRadioGroup;
     private RadioGroup octaveRadioGroup;
+    private RadioGroup playModeRadioGroup;
     private CheckBox lockCheckBox;
     private TextView lockNoteIdTextView;
     private Wave wave;
@@ -76,7 +74,9 @@ public class MainActivity extends AppCompatActivity
         waveRadioGroup.setOnCheckedChangeListener(this);
         waveRadioGroup.check(R.id.sine_radio_button);
         octaveRadioGroup = (RadioGroup) findViewById(R.id.octave_radio_group);
-        octaveRadioGroup.check(R.id.one_radio_button);
+        octaveRadioGroup.check(R.id.one_note_radio_button);
+        playModeRadioGroup = (RadioGroup) findViewById(R.id.play_mode_radio_group);
+        playModeRadioGroup.check(R.id.one_note_radio_button);
         lockCheckBox = (CheckBox) findViewById(R.id.lock_checkbox);
         lockCheckBox.setOnCheckedChangeListener(this);
         lockNoteIdTextView = (TextView) findViewById(R.id.lock_note_id_textview);
@@ -91,10 +91,10 @@ public class MainActivity extends AppCompatActivity
     public void onSensorChanged(SensorEvent event) {
         long index = 0;
 
-        if (octaveRadioGroup.getCheckedRadioButtonId() == R.id.one_radio_button) {
+        if (octaveRadioGroup.getCheckedRadioButtonId() == R.id.one_octave_radio_button) {
             // For one octave (more space to rotate)
             index = Math.round((event.values[0] + 10) * 12.0 / 20.0);
-        } else if (octaveRadioGroup.getCheckedRadioButtonId() == R.id.two_radio_button) {
+        } else if (octaveRadioGroup.getCheckedRadioButtonId() == R.id.two_octaves_radio_button) {
             // For two octaves (more notes are available)
             index = Math.round(event.values[0] * 1.2);
         }
@@ -151,6 +151,12 @@ public class MainActivity extends AppCompatActivity
                     break;
                 default:
                     wave = new SineWave();
+                    break;
+            }
+        } else if (group.getId() == R.id.play_mode_radio_group) {
+            switch (checkedId) {
+//                case R.id.one_note_radio_button:
+                default:
                     break;
             }
         }
