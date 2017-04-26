@@ -16,6 +16,8 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 import ru.hse.theremin.synthesizer.AudioPlayer;
@@ -44,7 +46,9 @@ public class MainActivity extends AppCompatActivity
     // Чижик - пыжик
     // private int[] lockNotes = {10, 6, 10, 6, 11, 10, 8, 1, 1, 3, 5, 6, 6, 6};
     // Гамма
-    private int[] lockNotes = {0, 2, 4, 5, 7, 9, 11, 12};
+    private List<Integer> lockNotes =
+            Arrays.asList(-12, -10, -8, -7, -5, -3, -1,
+                    0, 2, 4, 5, 7, 9, 11, 12);
     private int lockNoteId = 0;
 
     @Override
@@ -88,11 +92,14 @@ public class MainActivity extends AppCompatActivity
         }
 
         if (lockNotesFlag) {
-            if (lockNotes[lockNoteId] == index) {
+            if (lockNotes.contains(index)) {
                 audioPlayer.setFreq(index);
-                lockNoteId = (lockNoteId + 1) % lockNotes.length;
-                lockNoteIdTextView.setText(String.format(Locale.US, "Next note: %d", lockNotes[lockNoteId]));
             }
+//            if (lockNotes[lockNoteId] == index) {
+//                audioPlayer.setFreq(index);
+//                lockNoteId = (lockNoteId + 1) % lockNotes.length;
+//                lockNoteIdTextView.setText(String.format(Locale.US, "Next note: %d", lockNotes[lockNoteId]));
+//            }
         } else {
             audioPlayer.setFreq(index);
         }
@@ -160,11 +167,11 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         lockNotesFlag = isChecked;
-        if (lockNotesFlag) {
-            lockNoteId = 0;
-            lockNoteIdTextView.setText(String.format(Locale.US, "Next note: %d", lockNotes[lockNoteId]));
-        } else {
-            lockNoteIdTextView.setText("");
-        }
+//        if (lockNotesFlag) {
+//            lockNoteId = 0;
+//            lockNoteIdTextView.setText(String.format(Locale.US, "Next note: %d", lockNotes[lockNoteId]));
+//        } else {
+//            lockNoteIdTextView.setText("");
+//        }
     }
 }
