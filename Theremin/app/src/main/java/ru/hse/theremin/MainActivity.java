@@ -25,12 +25,37 @@ public class MainActivity extends AppCompatActivity
         RadioGroup.OnCheckedChangeListener,
         View.OnClickListener {
 
+    private static final float[] notesOneOctave = new float[13];
+    private static final float[] notesTwoOctaves = new float[25];
+
     private SensorManager sensorManager;
     private Sensor sensor;
     private Button playButton, stopButton, lockButton;
     private TextView idxTextView, lockTextView;
     private RadioGroup waveRadioGroup, octaveRadioGroup, playModeRadioGroup;
     AudioPlayer audioPlayer = new AudioPlayer();
+
+    static {
+        for (int i = 0; i < notesOneOctave.length; i++) {
+            notesOneOctave[i] = -10 + (i + 1) * 1.54f;
+        }
+
+        for (int i = 0; i < notesTwoOctaves.length; i++) {
+            notesTwoOctaves[i] = -10 + (i + 1) * 0.8f;
+        }
+    }
+
+    // FIXME: работает правильно только для одной октавы
+    private static int getIndex(float[] intervals, float value) {
+        for (int i = 0; i < intervals.length; i++) {
+            if (value <= intervals[i]) {
+                return i;
+            }
+        }
+        return intervals.length - 1;
+    }
+
+    TextView valueTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +81,8 @@ public class MainActivity extends AppCompatActivity
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_GAME);
+
+        valueTextView = (TextView) findViewById(R.id.value_textview);
     }
 
 
@@ -65,10 +92,12 @@ public class MainActivity extends AppCompatActivity
 
         if (octaveRadioGroup.getCheckedRadioButtonId() == R.id.one_octave_radio_button) {
             // For one octave (more space to rotate)
-            index = (int) Math.round((event.values[0] + 10) * 12.0 / 20.0);
+            // index = (int) Math.round((event.values[0] + 10) * 0.6);
+            index = getIndex(notesOneOctave, event.values[0]);
         } else if (octaveRadioGroup.getCheckedRadioButtonId() == R.id.two_octaves_radio_button) {
             // For two octaves (more notes are available)
-            index = (int) Math.round(event.values[0] * 1.2);
+            // index = (int) Math.round(event.values[0] * 1.2);
+            index = getIndex(notesTwoOctaves, event.values[0]);
         }
 
         if (!lockButton.isPressed()) {
@@ -78,6 +107,7 @@ public class MainActivity extends AppCompatActivity
         // TODO: Может стоит сделать листнер для lockButton, а не проверять это здесь
         // (хотя сенсоры срабатывают очень часто)
         lockTextView.setText(String.format(Locale.US, "Lock status: %s", lockButton.isPressed() ? "ON" : "OFF"));
+        valueTextView.setText(String.format(Locale.US, "X: %f", event.values[0]));
     }
 
     @Override

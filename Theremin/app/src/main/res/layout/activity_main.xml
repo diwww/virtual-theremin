@@ -12,6 +12,14 @@
         android:layout_gravity="center"
         tools:text="X Coordinate"/>
 
+    <TextView
+
+        android:id="@+id/value_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="TextView"/>
+
     <Button
         android:id="@+id/play_button"
         android:layout_width="match_parent"
