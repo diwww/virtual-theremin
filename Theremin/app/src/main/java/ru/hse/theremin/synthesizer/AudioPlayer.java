@@ -5,6 +5,10 @@ import android.media.AudioManager;
 import android.media.AudioTrack;
 
 public class AudioPlayer {
+
+    public static final int CHORD_NUM_REPEATS = 4;
+    public static final int ONE_NOTE_NUM_REPEATS = 1;
+
     public enum PlayMode {OneNote, TwoNotes, MajorChord, MinorChord;}
 
     private final Oscillator oscillator = new Oscillator();
@@ -25,48 +29,31 @@ public class AudioPlayer {
         this.playMode = playMode;
     }
 
-    private void majorChord() {
+    private void chord(int numRepeats, int... indices) {
         short[] data;
-        oscillator.setFreq(index);
-        data = oscillator.generate();
-        audioTrack.write(data, 0, data.length);
-        oscillator.setFreq(index + 4);
-        data = oscillator.generate();
-        audioTrack.write(data, 0, data.length);
-        oscillator.setFreq(index + 7);
-        data = oscillator.generate();
-        audioTrack.write(data, 0, data.length);
+        for (int i = 0; i < indices.length; i++) {
+            oscillator.setFreq(indices[i]);
+            for (int j = 0; j < numRepeats; j++) {
+                data = oscillator.generate();
+                audioTrack.write(data, 0, data.length);
+            }
+        }
+    }
+
+    private void majorChord() {
+        chord(CHORD_NUM_REPEATS, index, index + 4, index + 7);
     }
 
     private void minorChord() {
-        short[] data;
-        oscillator.setFreq(index);
-        data = oscillator.generate();
-        audioTrack.write(data, 0, data.length);
-        oscillator.setFreq(index + 3);
-        data = oscillator.generate();
-        audioTrack.write(data, 0, data.length);
-        oscillator.setFreq(index + 7);
-        data = oscillator.generate();
-        audioTrack.write(data, 0, data.length);
+        chord(CHORD_NUM_REPEATS, index, index + 3, index + 7);
     }
 
     private void twoNotes() {
-        short[] data;
-        oscillator.setFreq(index);
-        data = oscillator.generate();
-        audioTrack.write(data, 0, data.length);
-        oscillator.setFreq(index - 12);
-        data = oscillator.generate();
-        audioTrack.write(data, 0, data.length);
-
+        chord(CHORD_NUM_REPEATS, index, index - 12);
     }
 
     private void oneNote() {
-        short[] data;
-        oscillator.setFreq(index);
-        data = oscillator.generate();
-        audioTrack.write(data, 0, data.length);
+        chord(ONE_NOTE_NUM_REPEATS, index);
     }
 
 

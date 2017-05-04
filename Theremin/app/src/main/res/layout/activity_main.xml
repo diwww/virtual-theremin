@@ -118,11 +118,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/minor"/>
-
     </RadioGroup>
 
-    <CheckBox
-        android:id="@+id/lock_checkbox"
+    <Button
+        android:id="@+id/lock_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -130,10 +129,11 @@
         android:text="@string/lock"/>
 
     <TextView
-        android:id="@+id/lock_note_id_textview"
+        android:id="@+id/lock_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        tools:text="Next note"/>
+        android:layout_marginTop="20dp"
+        tools:text="Lock status"/>
 
 </LinearLayout>

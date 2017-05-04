@@ -10,14 +10,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Locale;
 
 import ru.hse.theremin.synthesizer.AudioPlayer;
@@ -27,29 +23,14 @@ import ru.hse.theremin.synthesizer.TriangleWave;
 public class MainActivity extends AppCompatActivity
         implements SensorEventListener,
         RadioGroup.OnCheckedChangeListener,
-        CompoundButton.OnCheckedChangeListener,
         View.OnClickListener {
 
     private SensorManager sensorManager;
     private Sensor sensor;
-    private Button playButton, stopButton;
-    private TextView idxTextView;
-    private RadioGroup waveRadioGroup;
-    private RadioGroup octaveRadioGroup;
-    private RadioGroup playModeRadioGroup;
-    private CheckBox lockCheckBox;
-    private TextView lockNoteIdTextView;
+    private Button playButton, stopButton, lockButton;
+    private TextView idxTextView, lockTextView;
+    private RadioGroup waveRadioGroup, octaveRadioGroup, playModeRadioGroup;
     AudioPlayer audioPlayer = new AudioPlayer();
-    private boolean lockNotesFlag = false;
-    // Dark synth
-    // private int[] lockNotes = {0, 5, 3, 1};
-    // Чижик - пыжик
-    // private int[] lockNotes = {10, 6, 10, 6, 11, 10, 8, 1, 1, 3, 5, 6, 6, 6};
-    // Гамма
-    private List<Integer> lockNotes =
-            Arrays.asList(-12, -10, -8, -7, -5, -3, -1,
-                    0, 2, 4, 5, 7, 9, 11, 12);
-    private int lockNoteId = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +41,9 @@ public class MainActivity extends AppCompatActivity
         playButton.setOnClickListener(this);
         stopButton = (Button) findViewById(R.id.stop_button);
         stopButton.setOnClickListener(this);
+        lockButton = (Button) findViewById(R.id.lock_button);
         idxTextView = (TextView) findViewById(R.id.idx_textview);
+        lockTextView = (TextView) findViewById(R.id.lock_textview);
         waveRadioGroup = (RadioGroup) findViewById(R.id.wave_radio_group);
         waveRadioGroup.setOnCheckedChangeListener(this);
         waveRadioGroup.check(R.id.sine_radio_button);
@@ -69,9 +52,6 @@ public class MainActivity extends AppCompatActivity
         playModeRadioGroup = (RadioGroup) findViewById(R.id.play_mode_radio_group);
         playModeRadioGroup.setOnCheckedChangeListener(this);
         playModeRadioGroup.check(R.id.one_note_radio_button);
-        lockCheckBox = (CheckBox) findViewById(R.id.lock_checkbox);
-        lockCheckBox.setOnCheckedChangeListener(this);
-        lockNoteIdTextView = (TextView) findViewById(R.id.lock_note_id_textview);
         // Sensors initialization
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
@@ -91,20 +71,13 @@ public class MainActivity extends AppCompatActivity
             index = (int) Math.round(event.values[0] * 1.2);
         }
 
-        if (lockNotesFlag) {
-            if (lockNotes.contains(index)) {
-                audioPlayer.setFreq(index);
-            }
-//            if (lockNotes[lockNoteId] == index) {
-//                audioPlayer.setFreq(index);
-//                lockNoteId = (lockNoteId + 1) % lockNotes.length;
-//                lockNoteIdTextView.setText(String.format(Locale.US, "Next note: %d", lockNotes[lockNoteId]));
-//            }
-        } else {
+        if (!lockButton.isPressed()) {
             audioPlayer.setFreq(index);
         }
-
         idxTextView.setText(String.format(Locale.US, "Index: %d", index));
+        // TODO: Может стоит сделать листнер для lockButton, а не проверять это здесь
+        // (хотя сенсоры срабатывают очень часто)
+        lockTextView.setText(String.format(Locale.US, "Lock status: %s", lockButton.isPressed() ? "ON" : "OFF"));
     }
 
     @Override
@@ -162,16 +135,5 @@ public class MainActivity extends AppCompatActivity
                     break;
             }
         }
-    }
-
-    @Override
-    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-        lockNotesFlag = isChecked;
-//        if (lockNotesFlag) {
-//            lockNoteId = 0;
-//            lockNoteIdTextView.setText(String.format(Locale.US, "Next note: %d", lockNotes[lockNoteId]));
-//        } else {
-//            lockNoteIdTextView.setText("");
-//        }
     }
 }
