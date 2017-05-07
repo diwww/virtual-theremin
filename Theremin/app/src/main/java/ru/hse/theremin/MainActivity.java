@@ -13,9 +13,7 @@ import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.Locale;
-
 import ru.hse.theremin.synthesizer.AudioPlayer;
 import ru.hse.theremin.synthesizer.SineWave;
 import ru.hse.theremin.synthesizer.TriangleWave;
@@ -80,6 +78,11 @@ public class MainActivity extends AppCompatActivity
         sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_GAME);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stopButton.callOnClick();
+    }
 
     @Override
     public void onSensorChanged(SensorEvent event) {
@@ -87,19 +90,22 @@ public class MainActivity extends AppCompatActivity
 
         if (octaveRadioGroup.getCheckedRadioButtonId() == R.id.one_octave_radio_button) {
             // For one octave (more space to rotate)
-            // index = (int) Math.round((event.values[0] + 10) * 0.6);
+//            index = (int) Math.round((event.values[0] + 10) * 0.6);
             index = getIndex(notesOneOctave, event.values[0]);
         } else if (octaveRadioGroup.getCheckedRadioButtonId() == R.id.two_octaves_radio_button) {
             // For two octaves (more notes are available)
-            // index = (int) Math.round(event.values[0] * 1.2);
+//            index = (int) Math.round(event.values[0] * 1.2);
             index = getIndex(notesTwoOctaves, event.values[0]);
         }
 
         if (!lockButton.isPressed()) {
+            lockTextView.setTextColor(0xff000000);
             audioPlayer.setFreq(index);
+        } else {
+            lockTextView.setTextColor(0xffcc0000);
         }
 
-        idxTextView.setText(String.format(Locale.US, "Index: %d", index));
+        idxTextView.setText(String.format(Locale.US, "Note index: %d", index));
         lockTextView.setText(String.format(Locale.US, "Lock status: %s", lockButton.isPressed() ? "ON" : "OFF"));
     }
 
@@ -111,13 +117,13 @@ public class MainActivity extends AppCompatActivity
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.play_button:
-                Toast.makeText(this, "Playing", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Playing", Toast.LENGTH_SHORT).show();
                 new SynthAsyncTask().execute(audioPlayer);
                 playButton.setEnabled(false);
                 stopButton.setEnabled(true);
                 break;
             case R.id.stop_button:
-                Toast.makeText(this, "Stopped", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Stopped", Toast.LENGTH_SHORT).show();
                 audioPlayer.stop();
                 stopButton.setEnabled(false);
                 playButton.setEnabled(true);

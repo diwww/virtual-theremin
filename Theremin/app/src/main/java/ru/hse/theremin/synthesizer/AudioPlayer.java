@@ -7,15 +7,15 @@ import android.util.Log;
 
 public class AudioPlayer {
 
+    public enum PlayMode {OneNote, TwoNotes, MajorChord, MinorChord;}
+
     private static final int CHORD_NUM_REPEATS = 4;
     private static final int ONE_NOTE_NUM_REPEATS = 1;
-
-    public enum PlayMode {OneNote, TwoNotes, MajorChord, MinorChord;}
 
     private final Oscillator oscillator = new Oscillator();
     private AudioTrack audioTrack;
     private int index;
-    private boolean playing;
+    private boolean playing = false;
     private PlayMode playMode = PlayMode.OneNote;
 
     public void setWave(Wave wave) {
