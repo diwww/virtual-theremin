@@ -6,12 +6,12 @@
     <string name="square">Square</string>
     <string name="triangle">Triangle</string>
     <string name="saw">Saw</string>
-    <string name="wave_type">Wave Type</string>
+    <string name="wave_type">Wave</string>
     <string name="octaves">Octaves</string>
     <string name="one">One</string>
     <string name="two">Two</string>
     <string name="lock">Hold To Lock</string>
-    <string name="play_mode">Play Mode</string>
+    <string name="play_mode">Mode</string>
     <string name="major">Major</string>
     <string name="minor">Minor</string>
 </resources>

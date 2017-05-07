@@ -1,6 +1,7 @@
 package ru.hse.theremin;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -13,9 +14,13 @@ import android.widget.Button;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import java.util.Locale;
+
 import ru.hse.theremin.synthesizer.AudioPlayer;
+import ru.hse.theremin.synthesizer.SawtoothWave;
 import ru.hse.theremin.synthesizer.SineWave;
+import ru.hse.theremin.synthesizer.SquareWave;
 import ru.hse.theremin.synthesizer.TriangleWave;
 
 public class MainActivity extends AppCompatActivity
@@ -99,10 +104,10 @@ public class MainActivity extends AppCompatActivity
         }
 
         if (!lockButton.isPressed()) {
-            lockTextView.setTextColor(0xff000000);
+            lockTextView.setTextColor(Color.BLACK);
             audioPlayer.setFreq(index);
         } else {
-            lockTextView.setTextColor(0xffcc0000);
+            lockTextView.setTextColor(Color.RED);
         }
 
         idxTextView.setText(String.format(Locale.US, "Note index: %d", index));
@@ -144,6 +149,7 @@ public class MainActivity extends AppCompatActivity
                     audioPlayer.setWave(new TriangleWave());
                     break;
                 case R.id.saw_radio_button:
+                    audioPlayer.setWave(new SawtoothWave());
                     break;
                 case R.id.square_radio_button:
                     break;

@@ -25,7 +25,7 @@ public class Oscillator {
      */
     public Oscillator() {
         this.wave = new SineWave();
-        this.amp = (short) (Short.MAX_VALUE / 4);
+        this.amp = (short) (Short.MAX_VALUE / 2);
         this.freq = C_FIRST_OCTAVE;
     }
 
