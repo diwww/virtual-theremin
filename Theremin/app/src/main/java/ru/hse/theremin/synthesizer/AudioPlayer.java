@@ -3,11 +3,12 @@ package ru.hse.theremin.synthesizer;
 import android.media.AudioFormat;
 import android.media.AudioManager;
 import android.media.AudioTrack;
+import android.util.Log;
 
 public class AudioPlayer {
 
-    public static final int CHORD_NUM_REPEATS = 4;
-    public static final int ONE_NOTE_NUM_REPEATS = 1;
+    private static final int CHORD_NUM_REPEATS = 4;
+    private static final int ONE_NOTE_NUM_REPEATS = 1;
 
     public enum PlayMode {OneNote, TwoNotes, MajorChord, MinorChord;}
 
@@ -82,6 +83,8 @@ public class AudioPlayer {
                         break;
                 }
             }
+        } catch (Exception exc) {
+            Log.e("THEREMIN", exc.getMessage());
         } finally {
             audioTrack.stop();
             audioTrack.release();

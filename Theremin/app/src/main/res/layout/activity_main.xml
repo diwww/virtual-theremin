@@ -5,21 +5,6 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/idx_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        tools:text="X Coordinate"/>
-
-    <TextView
-
-        android:id="@+id/value_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="TextView"/>
-
     <Button
         android:id="@+id/play_button"
         android:layout_width="match_parent"
@@ -39,7 +24,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
         android:text="@string/wave_type"/>
 
     <RadioGroup
@@ -60,13 +44,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/triangle"/>
+
+        <RadioButton
+            android:id="@+id/square_radio_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/square"/>
+
+        <RadioButton
+            android:id="@+id/saw_radio_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/saw"/>
     </RadioGroup>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
         android:text="@string/octaves"/>
 
     <RadioGroup
@@ -93,7 +88,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
         android:text="@string/play_mode"/>
 
     <RadioGroup
@@ -128,12 +122,18 @@
             android:text="@string/minor"/>
     </RadioGroup>
 
+    <TextView
+        android:id="@+id/idx_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        tools:text="X Coordinate"/>
+
     <Button
         android:id="@+id/lock_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
         android:text="@string/lock"/>
 
     <TextView
@@ -141,7 +141,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="20dp"
         tools:text="Lock status"/>
 
 </LinearLayout>

@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity
         for (int i = 0; i < notesOneOctave.length; i++) {
             notesOneOctave[i] = -10 + (i + 1) * 1.54f;
         }
-
         for (int i = 0; i < notesTwoOctaves.length; i++) {
             notesTwoOctaves[i] = -10 + (i + 1) * 0.8f;
         }
@@ -54,8 +53,6 @@ public class MainActivity extends AppCompatActivity
         }
         return intervals.length - 1;
     }
-
-    TextView valueTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,8 +78,6 @@ public class MainActivity extends AppCompatActivity
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_GAME);
-
-        valueTextView = (TextView) findViewById(R.id.value_textview);
     }
 
 
@@ -103,11 +98,9 @@ public class MainActivity extends AppCompatActivity
         if (!lockButton.isPressed()) {
             audioPlayer.setFreq(index);
         }
+
         idxTextView.setText(String.format(Locale.US, "Index: %d", index));
-        // TODO: Может стоит сделать листнер для lockButton, а не проверять это здесь
-        // (хотя сенсоры срабатывают очень часто)
         lockTextView.setText(String.format(Locale.US, "Lock status: %s", lockButton.isPressed() ? "ON" : "OFF"));
-        valueTextView.setText(String.format(Locale.US, "X: %f", event.values[0]));
     }
 
     @Override
@@ -143,6 +136,10 @@ public class MainActivity extends AppCompatActivity
                     break;
                 case R.id.triangle_radio_button:
                     audioPlayer.setWave(new TriangleWave());
+                    break;
+                case R.id.saw_radio_button:
+                    break;
+                case R.id.square_radio_button:
                     break;
                 default:
                     break;
