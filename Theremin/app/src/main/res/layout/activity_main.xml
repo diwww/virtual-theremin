@@ -144,8 +144,8 @@
         android:id="@+id/keys_imageview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:src="@drawable/keyboard"/>
+        android:background="@drawable/keyboard"
+        android:layout_weight="1"/>
 
     <View
         android:layout_width="match_parent"

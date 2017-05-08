@@ -51,14 +51,24 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    // FIXME: работает правильно только для одной октавы
-    private static int getIndex(float[] intervals, float value) {
+    // TODO: DRY для методов октав
+    // FIXME: пофиксить методы для интервалов (иногда прыгает с 12 на 0 для двух октав)
+    private static int getIndexOneOct(float[] intervals, float value) {
         for (int i = 0; i < intervals.length; i++) {
             if (value <= intervals[i]) {
                 return i;
             }
         }
-        return intervals.length - 1;
+        return 0;
+    }
+
+    private static int getIndexTwoOct(float[] intervals, float value) {
+        for (int i = 0; i < intervals.length; i++) {
+            if (value <= intervals[i]) {
+                return i - 12;
+            }
+        }
+        return 0;
     }
 
     @Override
@@ -103,17 +113,20 @@ public class MainActivity extends AppCompatActivity
         if (octaveRadioGroup.getCheckedRadioButtonId() == R.id.one_octave_radio_button) {
             // For one octave (more space to rotate)
 //            index = (int) Math.round((event.values[0] + 10) * 0.6);
-            index = getIndex(notesOneOctave, event.values[0]);
+            index = getIndexOneOct(notesOneOctave, event.values[0]);
         } else if (octaveRadioGroup.getCheckedRadioButtonId() == R.id.two_octaves_radio_button) {
             // For two octaves (more notes are available)
 //            index = (int) Math.round(event.values[0] * 1.2);
-            index = getIndex(notesTwoOctaves, event.values[0]);
+            index = getIndexTwoOct(notesTwoOctaves, event.values[0]);
         }
+
+        String s = "index" + index;
+        s = s.replace('-', '_');
+        int resId = res.getIdentifier(s, "drawable", this.getPackageName());
+        keysImageView.setBackgroundResource(resId);
 
         if (!lockButton.isPressed()) {
             lockTextView.setTextColor(Color.BLACK);
-            int resId = res.getIdentifier("index" + index, "drawable", this.getPackageName());
-            keysImageView.setImageResource(resId);
             audioPlayer.setFreq(index);
         } else {
             lockTextView.setTextColor(Color.RED);
