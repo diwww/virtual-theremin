@@ -140,6 +140,20 @@
         android:layout_marginTop="2dp"
         android:background="@android:color/darker_gray"/>
 
+    <ImageView
+        android:id="@+id/keys_imageview"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:src="@drawable/keyboard"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginTop="2dp"
+        android:background="@android:color/darker_gray"/>
+
     <TextView
         android:id="@+id/idx_textview"
         android:layout_width="wrap_content"
@@ -147,7 +161,7 @@
         android:layout_gravity="center"
         android:textColor="@android:color/black"
         android:textSize="18sp"
-        tools:text="Note index"/>
+        tools:text="Note: 0"/>
 
     <TextView
         android:id="@+id/lock_textview"
@@ -156,7 +170,7 @@
         android:layout_gravity="center"
         android:textColor="@android:color/black"
         android:textSize="18sp"
-        tools:text="Lock status"/>
+        tools:text="Lock: OFF"/>
 
     <Button
         android:id="@+id/lock_button"

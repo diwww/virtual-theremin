@@ -1,6 +1,7 @@
 package ru.hse.theremin;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -11,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,6 +38,8 @@ public class MainActivity extends AppCompatActivity
     private Button playButton, stopButton, lockButton;
     private TextView idxTextView, lockTextView;
     private RadioGroup waveRadioGroup, octaveRadioGroup, playModeRadioGroup;
+    private ImageView keysImageView;
+    private Resources res;
     AudioPlayer audioPlayer = new AudioPlayer();
 
     static {
@@ -77,10 +81,13 @@ public class MainActivity extends AppCompatActivity
         playModeRadioGroup = (RadioGroup) findViewById(R.id.play_mode_radio_group);
         playModeRadioGroup.setOnCheckedChangeListener(this);
         playModeRadioGroup.check(R.id.one_note_radio_button);
+        keysImageView = (ImageView) findViewById(R.id.keys_imageview);
         // Sensors initialization
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_GAME);
+        // Resources
+        res = getResources();
     }
 
     @Override
@@ -105,13 +112,15 @@ public class MainActivity extends AppCompatActivity
 
         if (!lockButton.isPressed()) {
             lockTextView.setTextColor(Color.BLACK);
+            int resId = res.getIdentifier("index" + index, "drawable", this.getPackageName());
+            keysImageView.setImageResource(resId);
             audioPlayer.setFreq(index);
         } else {
             lockTextView.setTextColor(Color.RED);
         }
 
-        idxTextView.setText(String.format(Locale.US, "Note index: %d", index));
-        lockTextView.setText(String.format(Locale.US, "Lock status: %s", lockButton.isPressed() ? "ON" : "OFF"));
+        idxTextView.setText(String.format(Locale.US, "Note: %d", index));
+        lockTextView.setText(String.format(Locale.US, "Lock: %s", lockButton.isPressed() ? "ON" : "OFF"));
     }
 
     @Override
