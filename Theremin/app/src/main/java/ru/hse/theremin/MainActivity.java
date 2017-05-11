@@ -15,10 +15,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import java.util.Locale;
-
 import ru.hse.theremin.synthesizer.AudioPlayer;
 import ru.hse.theremin.synthesizer.SawtoothWave;
 import ru.hse.theremin.synthesizer.SineWave;
@@ -51,7 +48,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    // TODO: DRY для методов октав
     private static int getIndexOneOct(float[] intervals, float value) {
         for (int i = 0; i < intervals.length; i++) {
             if (value <= intervals[i]) {
@@ -111,11 +107,9 @@ public class MainActivity extends AppCompatActivity
 
         if (octaveRadioGroup.getCheckedRadioButtonId() == R.id.one_octave_radio_button) {
             // For one octave (more space to rotate)
-//            index = (int) Math.round((event.values[0] + 10) * 0.6);
             index = getIndexOneOct(notesOneOctave, -event.values[0]);
         } else if (octaveRadioGroup.getCheckedRadioButtonId() == R.id.two_octaves_radio_button) {
             // For two octaves (more notes are available)
-//            index = (int) Math.round(event.values[0] * 1.2);
             index = getIndexTwoOct(notesTwoOctaves, -event.values[0]);
         }
 
@@ -143,13 +137,11 @@ public class MainActivity extends AppCompatActivity
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.play_button:
-//                Toast.makeText(this, "Playing", Toast.LENGTH_SHORT).show();
                 new SynthAsyncTask().execute(audioPlayer);
                 playButton.setEnabled(false);
                 stopButton.setEnabled(true);
                 break;
             case R.id.stop_button:
-//                Toast.makeText(this, "Stopped", Toast.LENGTH_SHORT).show();
                 audioPlayer.stop();
                 stopButton.setEnabled(false);
                 playButton.setEnabled(true);
@@ -173,6 +165,7 @@ public class MainActivity extends AppCompatActivity
                     audioPlayer.setWave(new SawtoothWave());
                     break;
                 case R.id.square_radio_button:
+                    audioPlayer.setWave(new SquareWave());
                     break;
                 default:
                     break;
